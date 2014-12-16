@@ -88,7 +88,7 @@ Syphon.deserialize = function(view, data, options){
 // from the form
 var getInputElements = function(view, config){
   var form = getForm(view);
-  var elements = form.elements;
+  var elements = $(':input', form);
 
   elements = _.reject(elements, function(el){
     var reject;
@@ -144,10 +144,11 @@ var getElementType = function(el){
 // If a form element is given, just return it.
 // Otherwise, get the form element from the view.
 var getForm = function(viewOrForm){
-  if (_.isUndefined(viewOrForm.$el) && viewOrForm.tagName.toLowerCase() === 'form'){
+  if (!_.isUndefined(viewOrForm.$el)) {
+    return viewOrForm.$el;
+  }
+  else {
     return viewOrForm;
-  } else {
-    return viewOrForm.$el.is('form') ? viewOrForm.el : viewOrForm.$('form')[0];
   }
 };
 
